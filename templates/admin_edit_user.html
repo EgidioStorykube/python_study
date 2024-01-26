@@ -1,0 +1,63 @@
+<div class="d-flex flex-column flex-md-row">
+  {% include 'aside.html' %}
+  <table class="table edit_user">
+    <thead>
+      <tr>
+        <th class="col-4 col-md-6">Username</th>
+        <th class="col-4">Role</th>
+        <th class="col-4 col-md-2">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      {% if not user.username == username %}
+      <tr>
+        <td class="username col-4 col-md-6">{{ user.username }}</td>
+        <td class="col-4">
+          {% if not user.role == 'admin' or username == 'admin' %}
+          <form action="/admin/change_role/{{ user.id }}" method="POST" class="d-flex gap-1 flex-column flex-md-row">
+            <select name="role" class="form-control rounded content">
+              <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+              <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+              <!-- Add more options for other roles -->
+            </select>
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="submit" value="Update" class="btn btn-sm btn-primary">
+          </form>
+          {% else %}
+          {{ user.role }}
+          {% endif %}
+        </td>
+        <td class="col-4 col-md-2">
+          {% if not user.role == 'admin' or username == 'admin' %}
+          <button id="delete_user" type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#admin_delete_{{ user.id }}">
+            Delete
+          </button>
+          {% else %}
+          🚫
+          {% endif %}
+        </td>
+      </tr>
+      <!-- Modal -->
+      <div class="modal fade" id="admin_delete_{{ user.id }}" tabindex="-1" aria-labelledby="admin_delete_label_{{ user.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="admin_delete_label_{{ user.id }}">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+              <a href="/admin/delete/{{ user.id }}" class="btn btn-sm btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+

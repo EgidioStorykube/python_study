@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">🚀</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if not current_user.is_authenticated %}disabled{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Rocket Apps
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/ip_address_monitoring_tool/{{ current_user.id }}">IP Address Monitoring Tool</a></li>
+            <li><a class="dropdown-item" href="/todo_list_tool/{{ current_user.id }}">Todo List</a></li>
+            <li><a class="dropdown-item" href="/url_shortener">Url Shortener</a></li>
+            <li><a class="dropdown-item" href="/words_counter">Words and Paragraph Counter</a></li>
+            <li><a class="dropdown-item" href="/gen_password">Random Password Generator</a></li>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center" >
+        {% if current_user.is_authenticated %}
+          {% if current_user.is_authenticated and (role == 'admin' or (current_user.role == 'admin')) %}
+            <a href="/admin" class="btn btn-outline-dark me-2">Admin Dashboard</a>
+          {% endif %}
+  
+          <a href="/logout" class="btn btn-outline-secondary me-2">Logout</a>
+        {% else %}
+          <a href="/login" class="btn btn-primary me-2">Login</a>
+          <span class="me-2">or</span>
+          <a href="/register" class="btn btn-success me-2">Sign-up</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

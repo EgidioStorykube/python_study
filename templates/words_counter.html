@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Words and Paragraph Counter{% endblock %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Words and Paragraph Counter</h1>
+  <form action='/words_counter' method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+    <div class="d-flex justify-content-between">
+      <label for="text">
+        <h5>Enter Text:</h5>
+      </label>
+        <div id="test_text" class="d-none">{{ test_text }}</div>
+        <div class='btn btn-sm btn-success' onclick='use_text_text()'>Use Test Text</div>
+      </div>
+    <textarea type="text" name="text" placeholder="Please enter your text..." rows="8"></textarea>
+    <div class="d-flex justify-content-end">
+      <button type='submit' class='btn btn-primary'>COUNT</button>
+    </div>
+    {% if words %}
+    <div class="alert alert-success" role="alert">
+      <h3>
+        Words - {{ words }} || Paragraphs - {{ paras}} || Characters - {{ chars }} || Unique Words - {{ unique_words }}
+      </h3>
+      <hr>
+      <h5>Origin Text</h5>
+      <p>{{ origin_text | replace("\n", "<br>") | safe }}</p>
+    </div>
+    {% endif %}
+  </form>
+</div>
+<script>
+  function use_text_text() {
+    text = document.querySelector('#test_text').innerHTML;
+    document.querySelector('textarea').value = text;
+  }
+</script>
+{% endblock %}	

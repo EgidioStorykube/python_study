@@ -1,0 +1,103 @@
+*, *::before, *::after{
+  box-sizing: border-box !important;
+}
+
+body.home {
+background-image: url('/static/images/rocket1.png');
+background-size: cover;
+}
+
+.content {
+  @media screen and (min-width: 768px) {
+    max-width: max-content;
+  }
+}
+
+.username {
+  word-break: break-all;
+}
+
+ul.bg-dark {
+  min-width: 100px;
+  @media screen and (min-width: 768px) {
+    height: calc(100vh - 56px);
+  }
+}
+.bg-dark > .nav-item > .nav-link {
+  color: #fff;
+}
+
+.table.edit_user {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+table.edit_user td {
+  border: unset !important;
+}
+table.edit_user td, table.edit_user th {
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
+}
+.table.edit_user th, .table.edit_user tr {
+  text-align: left;
+  max-height: max-content;
+  border: 1px solid #ddd;
+}
+.table.edit_user tr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: unset !important;
+}
+.table.edit_user th {
+  border-left: unset !important;
+  border-right: unset !important;
+}
+
+.btn {
+  @media screen and (min-width: 768px) {
+    min-width: 110px;
+  }
+}
+
+.rocket_app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+ }
+
+.url_info {
+  word-break: break-all;
+  height: 100%;
+  min-height: 100px;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#dateInputContainer {
+  display: none;
+}
+
+.close_icon {
+  width: 30px;
+  height: auto;
+}
+
+.opacity_5 {
+  opacity: 0.5;
+}
+
+input[type=number] {
+  width: 10ch; /* 3 characters width */
+}

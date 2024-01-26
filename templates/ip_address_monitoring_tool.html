@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}IP Address Monitoring Tool{% endblock %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %}
+  <div class="row mt-2 align-items-center">
+    <h1 class="col-12 col-md-8">IP Address Monitoring Tool by RocketApp</h1>
+    <div class="col-12 col-md-4">
+      <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#add_ip_address">
+        Add IP Address
+      </button>
+      <a href="/ip_address_monitoring_tool/{{ current_user.id }}" class="btn btn-sm btn-primary">Refresh Monitoring</a>
+    </div>
+  </div>
+	<div class="container d-flex align-items-center my-4">
+    <div class="row w-100">
+      {% for url in urls %}
+
+        <div class="col-6 col-md-4 col-xl-3 mb-2">
+          <div class="url_info p-1 d-flex flex-column border rounded border-dark justify-content-between">
+            <div class="d-flex justify-content-end gap-1 mt-1 mb-3">
+              <span id="copy_{{url.id}}" class="p-1 border rounded bg-light pointer" onclick="copyToClipboard('{{ url.ip_address }}', 'copy_{{url.id}}')">📄</span>
+              <div class="p-1 border rounded bg-light pointer" data-bs-toggle="modal" data-bs-target="#update_ip_address_{{ url.id }}">
+                ✏️
+              </div>
+              <a href="/delete_ip_address/{{ url.id }}" class="no-underline p-1 border rounded bg-light">🗑️</a>
+            </div>
+            <div class="user-select-all">
+              {{ url.ip_address }}
+            </div>
+            {% if url.ip_status == True %}
+              <div class="bg-success rounded p-1 text-center text-white">
+                Online
+              </div>
+              {% else %}
+              <div class="bg-danger rounded p-1 text-center">
+                Offline
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="update_ip_address_{{ url.id }}" tabindex="-1" aria-labelledby="update_ip_address_label_{{ url.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="update_ip_address_label_{{ url.id }}">Edit IP Address</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="/update_ip_address/{{url.id}}" method="post" class="d-flex flex-column my-1 align-items-center gap-1">
+                  <label for="ip_address_update">IP Address: </label>
+                  <input type="text" name="ip_address_update" value="{{url.ip_address}}"/>
+                  <button type="submit" class="btn btn-primary my-1">Save</button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+	</div>
+  <!-- Modal -->
+  <div class="modal fade" id="add_ip_address" tabindex="-1" aria-labelledby="add_ip_address_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="add_ip_address_label">Add IP Address</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/add_ip_address" method="post" class="d-flex flex-column my-1 align-items-center gap-1">
+            <label for="ip_address">IP Address: </label>
+            <input type="text" name="ip_address" />
+            <button type="submit" class="btn btn-primary my-1">ADD</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function copyToClipboard(text, id) {
+      navigator.clipboard.writeText(text);
+
+      const btn = document.getElementById(id);
+      btn.innerHTML = '✔️';
+      btn.classList.add('disabled');
+      btn.classList.remove('pointer');
+      setTimeout(() => {
+        btn.innerHTML = '📄';
+        btn.classList.remove('disabled');
+        btn.classList.add('pointer');
+      }, 3000);
+      
+    }
+  </script>
+{% endblock %}	

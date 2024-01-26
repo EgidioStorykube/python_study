@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Url Shortener{% endblock %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <h1>Url Shortener</h1>
+    <form action="/url_shortener" method="post">
+      <div class="form-group mb-2 d-flex flex-column gap-1">
+        <label for="long_url">Url</label>
+        <input type="text" class="form-control" id="long_url" name="long_url" placeholder="Enter url. E.G. https://www.example.com/very-long-url-to-test-shortner">
+      </div>
+      {% if short_url %}
+        <div class="alert alert-success d-flex justify-content-between align-items-center" role="alert-success" id="alert_success">
+          <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+          <img src="/static/images/close.png" id="alert_success_close" class="close_icon opacity_5"/>
+        </div>
+        {% endif %}
+        {% if short_url_error %}
+        <div class="alert alert-danger d-flex justify-content-between align-items-center" role="alert-invalid" id="alert_invalid">
+          <span>{{ short_url_error }}</span>
+          <img src="/static/images/close.png" id="alert_invalid_close" class="close_icon opacity_5"/>
+        </div>
+      {% endif %}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const successClose = document.getElementById("alert_success_close");
+      const invalidClose = document.getElementById("alert_invalid_close");
+
+      if (successClose) {
+        successClose.addEventListener('click', () => {
+          const success = document.getElementById("alert_success");
+          success.classList.remove("d-flex");
+          success.classList.add("d-none");
+        });
+      }
+
+      if (invalidClose) {
+        invalidClose.addEventListener('click', () => {
+          const invalid = document.getElementById("alert_invalid");
+          invalid.classList.remove("d-flex");
+          invalid.classList.add("d-none");
+        });
+      }
+  });
+</script>
+{% endblock %}	
