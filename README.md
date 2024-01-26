@@ -1,1 +1,1 @@
-# pyython_study
+# python_study
